@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RankYourInsta.io — Bid for #1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+    --ink:#F7F5EE;
+    --surface:#FFFFFF;
+    --surface2:#F2EEE1;
+    --surface3:#E9E2CC;
+    --purple:#1E3A5F;
+    --pink:#B8901F;
+    --orange:#A6432D;
+    --gold:#B8901F;
+    --gold-dim:#8A6A17;
+    --text:#171A21;
+    --muted:#5B6472;
+    --muted-dim:#8B93A0;
+    --border:rgba(23,26,33,0.12);
+    --success:#1E7F5C;
+    --danger:#A6432D;
+    --grad: linear-gradient(90deg, var(--purple), var(--pink) 60%, var(--orange));
+    --radius:12px;
+    --maxw:1160px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 560px at 10% -12%, rgba(184,144,31,0.10), transparent 60%),
+      radial-gradient(900px 480px at 92% -4%, rgba(30,58,95,0.08), transparent 55%),
+      var(--ink);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  h1,h2,h3,h4,.font-display{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono, .rank-num, .row-bid, .pbid, .hero-stats b, .amt, .qr-amount, .status-badge, .pay-amt{
+    font-family:'IBM Plex Mono', monospace;
+  }
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .muted{color:var(--muted);}
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px; border-radius:4px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  @media (max-width:480px){
+    .wrap{padding:0 16px;}
+  }
+
+  /* ===== HEADER ===== */
+  header.site-header{
+    position:sticky; top:0; z-index:60;
+    background:rgba(247,245,238,0.88);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .header-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .logo{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.3rem;
+    background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  nav.main-nav{display:flex; gap:2px;}
+  nav.main-nav a{
+    position:relative; padding:10px 16px; font-size:0.92rem; font-weight:600; color:var(--muted);
+    border-radius:10px;
+  }
+  nav.main-nav a::after{
+    content:''; position:absolute; left:16px; right:16px; bottom:6px; height:2px;
+    background:var(--grad); transform:scaleX(0); transform-origin:left; transition:transform 0.25s ease;
+  }
+  nav.main-nav a:hover{color:var(--text);}
+  nav.main-nav a:hover::after{transform:scaleX(1);}
+  nav.main-nav a.active{color:var(--text);}
+  nav.main-nav a.active::after{transform:scaleX(1);}
+
+  .header-actions{display:flex; align-items:center; gap:10px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:10px 18px; border-radius:10px; border:1px solid var(--border);
+    font-weight:600; font-size:0.9rem; background:transparent; color:var(--text);
+    transition:transform 0.15s ease, border-color 0.15s ease, box-shadow 0.2s ease;
+  }
+  .btn:hover{border-color:rgba(23,26,33,0.4); transform:translateY(-1px);}
+  .btn-primary{
+    background:var(--purple); border:none; color:#fff;
+    box-shadow:0 0 0 rgba(30,58,95,0);
+  }
+  .btn-primary:hover{box-shadow:0 6px 22px rgba(30,58,95,0.25); transform:translateY(-1px);}
+  .btn-gold{
+    background:linear-gradient(90deg,#C9A227,#B8901F); border:none; color:#211705; font-weight:700;
+  }
+  .btn-gold:hover{box-shadow:0 6px 22px rgba(184,144,31,0.35); transform:translateY(-1px);}
+  .btn-ghost{background:transparent; border:1px solid var(--border); color:var(--muted);}
+  .btn-ghost:hover{color:var(--text); border-color:rgba(23,26,33,0.4);}
+  .btn-block{width:100%;}
+  .btn-sm{padding:7px 13px; font-size:0.82rem;}
+
+  .avatar-btn{
+    width:42px; height:42px; border-radius:50%; overflow:hidden; border:2px solid var(--border);
+    padding:0; background:var(--surface2);
+  }
+  .avatar-btn img{width:100%; height:100%; object-fit:cover;}
+  .profile-menu{
+    position:relative;
+  }
+  .dropdown{
+    position:absolute; right:0; top:52px; width:190px;
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:6px; box-shadow:0 16px 40px rgba(23,26,33,0.14);
+    display:none; flex-direction:column; gap:2px;
+  }
+  .dropdown.open{display:flex;}
+  .dropdown button, .dropdown a{
+    text-align:left; padding:10px 12px; border-radius:8px; background:none; border:none; color:var(--text);
+    font-size:0.9rem; font-weight:500;
+  }
+  .dropdown button:hover, .dropdown a:hover{background:var(--surface2);}
+
+  .hamburger{display:none; background:none; border:none; color:var(--text); padding:8px;}
+  .hamburger svg{width:24px; height:24px;}
+
+  @media (max-width:860px){
+    nav.main-nav{display:none;}
+    .hamburger{display:inline-flex;}
+    .header-actions .desktop-only{display:none;}
+  }
+  .mobile-nav{
+    display:none; flex-direction:column; gap:2px; padding:12px 0 18px;
+    border-top:1px solid var(--border);
+  }
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a, .mobile-nav button{
+    padding:12px 6px; border-radius:8px; color:var(--muted); font-weight:600; background:none; border:none; text-align:left; font-size:0.95rem;
+  }
+  .mobile-nav a:hover, .mobile-nav a.active{color:var(--text); background:var(--surface2);}
+
+  /* ===== FIRST VISIT POPUP ===== */
+  .popup-overlay{
+    position:fixed; inset:0; background:rgba(23,26,33,0.35); backdrop-filter:blur(3px);
+    display:none; align-items:flex-end; justify-content:center; z-index:90; padding:20px;
+  }
+  .popup-overlay.open{display:flex;}
+  @media (min-width:640px){ .popup-overlay{align-items:center;} }
+  .welcome-card{
+    width:100%; max-width:420px; background:var(--surface); border:1px solid var(--border);
+    border-radius:18px; padding:26px 24px 24px; position:relative;
+    box-shadow:0 24px 60px rgba(23,26,33,0.18);
+    animation:pop-in 0.35s cubic-bezier(.2,.9,.25,1);
+  }
+  @keyframes pop-in{ from{opacity:0; transform:translateY(16px) scale(0.98);} to{opacity:1; transform:none;} }
+  .welcome-card .close-x{
+    position:absolute; top:14px; right:14px; background:none; border:none; color:var(--muted-dim);
+    width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+  .welcome-card .close-x:hover{color:var(--text); background:var(--surface2);}
+  .welcome-card .badge{
+    display:inline-block; font-size:0.78rem; font-weight:700; padding:5px 10px; border-radius:100px;
+    background:var(--purple); color:#fff; margin-bottom:14px;
+  }
+  .welcome-card h3{font-size:1.3rem; margin:0 0 8px;}
+  .welcome-card p{color:var(--muted); font-size:0.92rem; line-height:1.5; margin:0 0 18px;}
+  .welcome-card .row{display:flex; gap:10px;}
+  @media (max-width:420px){ .welcome-card .row{flex-direction:column;} }
+
+  /* ===== HERO ===== */
+  .hero{padding:64px 0 40px; position:relative;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  @media (max-width:920px){ .hero-grid{grid-template-columns:1fr;} }
+  @media (max-width:600px){ .hero{padding:40px 0 28px;} }
+  .eyebrow-pill{
+    display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:100px;
+    border:1px solid var(--border); background:var(--surface); font-size:0.8rem; color:var(--muted); margin-bottom:20px;
+  }
+  .eyebrow-pill .dot{width:7px; height:7px; border-radius:50%; background:var(--success); box-shadow:0 0 0 3px rgba(30,127,92,0.16); animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.4;}}
+  .hero h1{font-size:clamp(1.9rem, 4.4vw, 3.3rem); line-height:1.08; margin:0 0 18px; font-weight:600;}
+  .hero h1 .grad{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero p.lead{font-size:1.06rem; color:var(--muted); line-height:1.6; max-width:480px; margin:0 0 28px;}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap;}
+  .hero-stats{display:flex; gap:28px; margin-top:36px; flex-wrap:wrap;}
+  .hero-stats .stat b{font-size:1.4rem; display:block; font-weight:600;}
+  .hero-stats .stat span{font-size:0.78rem; color:var(--muted-dim); font-family:'Inter', sans-serif;}
+
+  .hero-visual{
+    position:relative; background:var(--surface); border:1px solid var(--border); border-radius:20px;
+    padding:22px; overflow:hidden; box-shadow:0 20px 50px rgba(23,26,33,0.06);
+  }
+  .hero-visual::before{
+    content:''; position:absolute; inset:-40% -40% auto auto; width:260px; height:260px;
+    background:var(--grad); filter:blur(80px); opacity:0.18; border-radius:50%;
+  }
+  .mini-podium{position:relative; display:flex; align-items:flex-end; justify-content:center; gap:14px; padding:18px 6px 4px;}
+  .mini-podium .p{
+    display:flex; flex-direction:column; align-items:center; gap:8px; flex:1; text-align:center;
+  }
+  .mini-podium .p img{width:52px; height:52px; border-radius:50%; object-fit:cover; border:2px solid var(--border);}
+  .mini-podium .p.rank1 img{width:68px; height:68px; border-color:var(--gold);}
+  .mini-podium .bar{width:100%; border-radius:10px 10px 0 0;}
+  .mini-podium .p.rank1 .bar{height:96px; background:linear-gradient(180deg,#C9A227,#8A6A17);}
+  .mini-podium .p.rank2 .bar{height:66px; background:var(--surface3);}
+  .mini-podium .p.rank3 .bar{height:48px; background:var(--surface3);}
+  .mini-podium .name{font-size:0.78rem; font-weight:700; font-family:'Inter';}
+  .mini-podium .amt{font-size:0.72rem; color:var(--muted);}
+
+  /* ===== SECTION HEADERS ===== */
+  .section{padding:56px 0;}
+  @media (max-width:600px){ .section{padding:38px 0;} }
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:26px; flex-wrap:wrap;}
+  .section-head h2{font-size:1.6rem; margin:0 0 6px; font-weight:600;}
+  .section-head p{color:var(--muted); margin:0; max-width:520px; font-size:0.95rem; font-family:'Inter';}
+
+  /* ===== LEADERBOARD ===== */
+  .board-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:20px; overflow:hidden;
+    box-shadow:0 20px 50px rgba(23,26,33,0.05);
+  }
+  .board-tabs{display:flex; gap:4px; padding:14px 14px 0; overflow-x:auto;}
+  .board-tab{
+    padding:10px 18px; border-radius:10px 10px 0 0; background:none; border:none; color:var(--muted-dim);
+    font-weight:700; font-size:0.88rem; position:relative; top:1px; white-space:nowrap;
+  }
+  .board-tab.active{color:var(--text); background:var(--surface2);}
+  .board-body{padding:18px; border-top:1px solid var(--border);}
+  @media (max-width:480px){ .board-body{padding:12px;} }
+
+  .board-list{display:flex; flex-direction:column; gap:8px;}
+  .board-row{
+    display:grid; grid-template-columns:34px 42px 1fr auto; gap:12px; align-items:center;
+    padding:12px 14px; border-radius:12px; background:var(--surface2); border:1px solid transparent;
+    transition:transform 0.4s cubic-bezier(.2,.8,.2,1), background 0.3s ease, border-color 0.3s ease;
+  }
+  @media (max-width:480px){
+    .board-row{grid-template-columns:26px 36px 1fr auto; gap:8px; padding:10px;}
+  }
+  .board-row.rank-1{border-color:rgba(184,144,31,0.55); background:linear-gradient(90deg, rgba(184,144,31,0.10), var(--surface2) 40%);}
+  .board-row.flash{background:rgba(30,127,92,0.14); border-color:rgba(30,127,92,0.5);}
+  .rank-num{font-weight:600; font-size:1rem; color:var(--muted); text-align:center;}
+  .board-row.rank-1 .rank-num{color:var(--gold);}
+  .board-row.rank-2 .rank-num{color:#6B7280;}
+  .board-row.rank-3 .rank-num{color:#A6432D;}
+  .row-avatar img{width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--border);}
+  @media (max-width:480px){ .row-avatar img{width:36px; height:36px;} }
+  .board-row.rank-1 .row-avatar img{border-color:var(--gold);}
+  .row-info{min-width:0;}
+  .row-info .rname{font-weight:700; font-size:0.92rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:'Inter';}
+  .row-info .rinsta{font-size:0.78rem; color:var(--muted); display:inline-flex; align-items:center; gap:4px; font-family:'Inter';}
+  .row-info .rinsta:hover{color:var(--purple);}
+  .row-bid{font-weight:600; font-size:1rem; white-space:nowrap; text-align:right;}
+  .row-bid .cur{font-size:0.7rem; color:var(--muted-dim); font-weight:500; margin-right:2px;}
+
+  .podium-wrap{display:flex; align-items:flex-end; justify-content:center; gap:20px; padding:20px 10px 10px; flex-wrap:wrap;}
+  .podium-card{
+    flex:1; min-width:150px; max-width:220px; background:var(--surface2); border:1px solid var(--border);
+    border-radius:16px; padding:20px 16px; text-align:center; position:relative;
+    transition:transform 0.3s ease;
+  }
+  .podium-card.p1{order:2; transform:translateY(-18px); border-color:rgba(184,144,31,0.5); background:linear-gradient(180deg, rgba(184,144,31,0.12), var(--surface2) 60%);}
+  .podium-card.p2{order:1;}
+  .podium-card.p3{order:3;}
+  @media (max-width:640px){ .podium-card.p1{order:1; transform:none;} .podium-card.p2{order:2;} .podium-card.p3{order:3;} }
+  .podium-card .crown{font-size:1.3rem; margin-bottom:6px;}
+  .podium-card img{width:64px; height:64px; border-radius:50%; object-fit:cover; margin:0 auto 12px; border:2px solid var(--border);}
+  .podium-card.p1 img{width:84px; height:84px; border-color:var(--gold);}
+  .podium-card .pname{font-weight:700; font-size:1rem; margin-bottom:2px; font-family:'Inter';}
+  .podium-card .pinsta{font-size:0.8rem; color:var(--muted); display:block; margin-bottom:10px; font-family:'Inter';}
+  .podium-card .pbid{font-weight:600; font-size:1.25rem;}
+  .podium-card.p1 .pbid{color:var(--gold); font-size:1.5rem;}
+
+  .board-footer{display:flex; justify-content:space-between; align-items:center; padding:14px 4px 4px; gap:12px; flex-wrap:wrap;}
+  .live-indicator{display:flex; align-items:center; gap:7px; font-size:0.8rem; color:var(--muted); font-family:'Inter';}
+  .live-indicator .dot{width:7px; height:7px; border-radius:50%; background:var(--danger); animation:pulse 1.4s infinite;}
+
+  /* ===== HOW IT WORKS ===== */
+  .how-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:780px){ .how-grid{grid-template-columns:1fr;} }
+  .how-card{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px;}
+  .how-card .num{font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:1.4rem; color:var(--gold); margin-bottom:10px;}
+  .how-card h4{margin:0 0 8px; font-size:1.05rem; font-weight:600;}
+  .how-card p{margin:0; color:var(--muted); font-size:0.9rem; line-height:1.55; font-family:'Inter';}
+
+  .cta-banner{
+    background:var(--purple); border-radius:20px; padding:40px; text-align:center; margin-top:8px;
+    position:relative; overflow:hidden;
+  }
+  @media (max-width:600px){ .cta-banner{padding:28px 20px;} }
+  .cta-banner h3{font-size:1.45rem; margin:0 0 10px; color:#fff;}
+  .cta-banner p{color:rgba(255,255,255,0.82); margin:0 0 22px; font-family:'Inter';}
+  .cta-banner .btn{background:#fff; color:var(--purple); border:none; font-weight:700;}
+
+  /* ===== FOOTER ===== */
+  footer{border-top:1px solid var(--border); padding:36px 0; margin-top:40px;}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .footer-links{display:flex; gap:18px; flex-wrap:wrap;}
+  .footer-links a{color:var(--muted); font-size:0.85rem; font-family:'Inter';}
+  .footer-links a:hover{color:var(--text);}
+  .footer-note{color:var(--muted-dim); font-size:0.78rem; margin-top:14px; font-family:'Inter'; line-height:1.6;}
+
+  /* ===== GENERIC PAGE ===== */
+  .page{padding:52px 0 70px;}
+  @media (max-width:600px){ .page{padding:36px 0 50px;} }
+  .page-head{max-width:640px; margin-bottom:36px;}
+  .page-head .eyebrow-pill{margin-bottom:16px;}
+  .page-head h1{font-size:2rem; margin:0 0 12px; font-weight:600;}
+  .page-head p{color:var(--muted); font-size:1rem; line-height:1.6; font-family:'Inter';}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:28px; box-shadow:0 20px 50px rgba(23,26,33,0.05);}
+  @media (max-width:480px){ .card{padding:20px;} }
+
+  /* Forms */
+  .form-group{margin-bottom:18px;}
+  .form-group label{display:block; font-size:0.85rem; font-weight:600; color:var(--muted); margin-bottom:7px; font-family:'Inter';}
+  .form-group input, .form-group select, .form-group textarea{
+    width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface2); color:var(--text); font-size:0.94rem; font-family:inherit;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus{border-color:var(--purple);}
+  .form-group .hint{font-size:0.78rem; color:var(--muted-dim); margin-top:6px; font-family:'Inter';}
+  .form-group .err{font-size:0.78rem; color:var(--danger); margin-top:6px; display:none; font-family:'Inter';}
+  .form-group.has-err input, .form-group.has-err select{border-color:var(--danger);}
+  .form-group.has-err .err{display:block;}
+  .form-row-2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:560px){ .form-row-2{grid-template-columns:1fr;} }
+
+  .upload-row{display:flex; align-items:center; gap:16px; margin-bottom:22px; flex-wrap:wrap;}
+  .upload-preview{width:64px; height:64px; border-radius:50%; overflow:hidden; background:var(--surface2); border:1px solid var(--border); flex-shrink:0;}
+  .upload-preview img{width:100%; height:100%; object-fit:cover;}
+  .file-btn{position:relative; overflow:hidden;}
+  .file-btn input[type=file]{position:absolute; inset:0; opacity:0; cursor:pointer;}
+
+  .method-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:6px;}
+  @media (max-width:600px){ .method-grid{grid-template-columns:repeat(2,1fr);} }
+  .method-opt{
+    border:1px solid var(--border); background:var(--surface2); border-radius:12px; padding:14px 10px;
+    text-align:center; font-size:0.8rem; font-weight:600; color:var(--muted); font-family:'Inter';
+  }
+  .method-opt.active{border-color:var(--purple); color:var(--text); background:rgba(30,58,95,0.08);}
+
+  .qr-box{
+    display:flex; flex-direction:column; align-items:center; gap:12px; padding:24px; margin-top:16px;
+    background:var(--surface2); border:1px dashed var(--border); border-radius:14px;
+  }
+  .qr-placeholder{
+    width:180px; height:180px; border-radius:12px; background:
+      repeating-linear-gradient(45deg, #EAE4D2 0 8px, #F2EEE1 8px 16px);
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:14px; font-size:0.78rem; color:var(--muted);
+    border:1px solid var(--border); font-family:'Inter';
+  }
+  .pill-note{
+    display:inline-flex; align-items:center; gap:7px; font-size:0.78rem; color:var(--muted);
+    background:var(--surface3); padding:6px 12px; border-radius:100px; font-family:'Inter';
+  }
+
+  .status-badge{display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:600; padding:6px 12px; border-radius:100px;}
+  .status-badge.paid{background:rgba(30,127,92,0.14); color:var(--success);}
+  .status-badge.pending{background:rgba(184,144,31,0.14); color:var(--gold-dim);}
+  .status-badge.failed{background:rgba(166,67,45,0.14); color:var(--danger);}
+
+  /* Modals */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(23,26,33,0.4); backdrop-filter:blur(3px);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    width:100%; max-width:420px; background:var(--surface); border:1px solid var(--border);
+    border-radius:18px; padding:28px 26px; position:relative;
+    box-shadow:0 24px 60px rgba(23,26,33,0.2);
+    animation:pop-in 0.3s cubic-bezier(.2,.9,.25,1);
+  }
+  @media (max-width:480px){ .modal{padding:22px 18px;} }
+  .modal .close-x{position:absolute; top:14px; right:14px; background:none; border:none; color:var(--muted-dim); width:30px; height:30px; border-radius:50%;}
+  .modal .close-x:hover{color:var(--text); background:var(--surface2);}
+  .modal h3{margin:0 0 4px; font-size:1.3rem; font-weight:600;}
+  .modal .sub{color:var(--muted); font-size:0.88rem; margin:0 0 22px; font-family:'Inter';}
+  .modal-link{font-size:0.84rem; color:var(--muted); margin-top:14px; text-align:center; font-family:'Inter';}
+  .modal-link button{background:none; border:none; color:var(--purple); font-weight:700; font-size:0.84rem;}
+  .modal-foot-link{display:block; text-align:right; font-size:0.8rem; color:var(--muted-dim); margin-top:8px; font-family:'Inter';}
+  .modal-foot-link:hover{color:var(--muted);}
+
+  .toast-wrap{position:fixed; top:88px; right:20px; left:20px; z-index:120; display:flex; flex-direction:column; align-items:flex-end; gap:10px; pointer-events:none;}
+  .toast{
+    background:#20242D; color:#F7F5EE; border-radius:12px; padding:14px 18px;
+    font-size:0.86rem; max-width:280px; box-shadow:0 12px 30px rgba(23,26,33,0.25);
+    animation:toast-in 0.3s ease; font-family:'Inter'; pointer-events:auto;
+    border-left:3px solid var(--success);
+  }
+  @keyframes toast-in{ from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:none;} }
+
+  /* Contact page */
+  .contact-grid{display:grid; grid-template-columns:1fr 1.1fr; gap:24px;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px;
+    display:flex; gap:14px; align-items:flex-start; margin-bottom:14px;
+    transition:border-color 0.2s ease, transform 0.2s ease;
+  }
+  @media (max-width:480px){ .contact-card{padding:16px;} }
+  .contact-card:hover{border-color:rgba(30,58,95,0.3); transform:translateY(-2px);}
+  .c-icon{
+    width:42px; height:42px; border-radius:10px; background:var(--purple); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  }
+  .contact-card h4{margin:0 0 4px; font-size:0.98rem; font-weight:600;}
+  .contact-card p{margin:0; color:var(--muted); font-size:0.88rem; font-family:'Inter';}
+  .contact-card a{color:var(--text); font-weight:600;}
+  .contact-card a:hover{color:var(--purple);}
+
+  /* Privacy / About prose */
+  .prose h2{font-size:1.2rem; margin:30px 0 10px; font-weight:600;}
+  .prose h2:first-child{margin-top:0;}
+  .prose p, .prose li{color:var(--muted); font-size:0.95rem; line-height:1.75; font-family:'Inter';}
+  .prose ul{padding-left:20px;}
+  .prose strong{color:var(--text);}
+
+  .diagram{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:22px 0; padding:20px; background:var(--surface2); border:1px solid var(--border); border-radius:14px;}
+  .diagram .dstep{flex:1; min-width:120px; text-align:center; font-size:0.82rem; color:var(--muted); font-family:'Inter';}
+  .diagram .dstep b{display:block; color:var(--text); font-size:0.95rem; margin-bottom:4px; font-family:'IBM Plex Mono', monospace; font-weight:600;}
+  .diagram .arrow{color:var(--muted-dim); font-size:1.2rem;}
+  @media (max-width:600px){ .diagram{flex-direction:column;} .diagram .arrow{transform:rotate(90deg);} }
+
+  .value-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:22px 0;}
+  @media (max-width:780px){ .value-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .value-grid{grid-template-columns:1fr;} }
+  .value-item{background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:18px;}
+  .value-item h4{margin:0 0 6px; font-size:0.95rem; font-weight:600; font-family:'Inter';}
+  .value-item p{margin:0; font-size:0.85rem; color:var(--muted); line-height:1.55; font-family:'Inter';}
+
+  .faq-item{border-bottom:1px solid var(--border); padding:16px 0;}
+  .faq-item:last-child{border-bottom:none;}
+  .faq-item h4{margin:0 0 6px; font-size:0.95rem; font-weight:600; font-family:'Inter';}
+  .faq-item p{margin:0; font-size:0.88rem; color:var(--muted); line-height:1.6; font-family:'Inter';}
+
+  [data-page]{display:none;}
+  [data-page].active{display:block;}
+
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="#" class="logo font-display" onclick="nav('home');return false;">RankYourInsta.io</a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#" data-nav="home" onclick="nav('home');return false;">Home</a>
+      <a href="#" data-nav="about" onclick="nav('about');return false;">About Us</a>
+      <a href="#" data-nav="contact" onclick="nav('contact');return false;">Contact Us</a>
+      <a href="#" data-nav="privacy" onclick="nav('privacy');return false;">Privacy Policy</a>
+    </nav>
+    <div class="header-actions">
+      <div class="desktop-only" id="loggedOutActions" style="display:flex; gap:10px;">
+        <button class="btn btn-ghost" onclick="openModal('login')">Login</button>
+        <button class="btn btn-primary" onclick="nav('signup')">Sign Up</button>
+      </div>
+      <div class="profile-menu" id="loggedInActions" style="display:none;">
+        <button class="avatar-btn" onclick="toggleDropdown()" aria-label="Profile menu">
+          <img id="headerAvatar" src="" alt="">
+        </button>
+        <div class="dropdown" id="profileDropdown">
+          <button onclick="nav('editProfile'); toggleDropdown()">Edit Profile</button>
+          <button onclick="logout()">Log Out</button>
+        </div>
+      </div>
+      <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#" onclick="nav('home');return false;">Home</a>
+      <a href="#" onclick="nav('about');return false;">About Us</a>
+      <a href="#" onclick="nav('contact');return false;">Contact Us</a>
+      <a href="#" onclick="nav('privacy');return false;">Privacy Policy</a>
+      <div id="mobileAuthLinks" style="display:flex; gap:10px; margin-top:8px;">
+        <button class="btn btn-ghost btn-block" onclick="openModal('login')">Login</button>
+        <button class="btn btn-primary btn-block" onclick="nav('signup')">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== FIRST VISIT POPUP ===================== -->
+<div class="popup-overlay" id="welcomePopup">
+  <div class="welcome-card">
+    <button class="close-x" onclick="closeWelcome()" aria-label="Close">&times;</button>
+    <span class="badge">Live now</span>
+    <h3>Bid to get your Insta on top</h3>
+    <p>Live leaderboard, real results — the highest bidder holds #1 until someone outbids them. Sign up to enter, or just watch the board as a guest.</p>
+    <div class="row">
+      <button class="btn btn-primary btn-block" onclick="closeWelcome(); nav('signup');">Sign Up</button>
+      <button class="btn btn-ghost btn-block" onclick="closeWelcome(); openModal('login');">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOASTS ===================== -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ===================== MODALS ===================== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="close-x" onclick="closeModal('login')">&times;</button>
+    <h3>Welcome back</h3>
+    <p class="sub">Log in to bid and manage your rank.</p>
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" placeholder="••••••••">
+      <a href="#" class="modal-foot-link" onclick="toast('Password reset link sent (demo)');return false;">Forgot password?</a>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="doLogin()">Log In</button>
+    <p class="modal-link">Don't have an account? <button onclick="closeModal('login'); nav('signup')">Sign up</button></p>
+  </div>
+</div>
+
+<!-- ===================== MAIN CONTENT ===================== -->
+<main>
+
+<!-- ---------- HOME ---------- -->
+<div data-page="home" class="active">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow-pill"><span class="dot"></span> Live auction — leaderboard updates in real time</div>
+        <h1>Bid your way to <span class="grad">#1</span> on Instagram's live leaderboard.</h1>
+        <p class="lead">Every bid is a real payment. Highest bid holds the top spot — until someone else pays more. No wallets, no reserves, just live competition.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" onclick="handleBidNow()">Bid Now</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('leaderboard').scrollIntoView({behavior:'smooth'})">See Leaderboard</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b id="statTotal">—</b><span>Active bidders</span></div>
+          <div class="stat"><b id="statTop">—</b><span>Current top bid</span></div>
+          <div class="stat"><b>24×7</b><span>Support</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="mini-podium" id="miniPodium"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="leaderboard">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>The Leaderboard</h2>
+          <p>Ranked live by highest current paid bid. Get outbid, and you'll see yourself slide down in real time.</p>
+        </div>
+      </div>
+
+      <div class="board-card">
+        <div class="board-tabs">
+          <button class="board-tab active" data-tab="all" onclick="setBoardTab('all')">Leaderboard</button>
+          <button class="board-tab" data-tab="top10" onclick="setBoardTab('top10')">Top 10</button>
+          <button class="board-tab" data-tab="top3" onclick="setBoardTab('top3')">Top 3</button>
+        </div>
+        <div class="board-body">
+          <div id="boardListView" class="board-list"></div>
+          <div id="boardPodiumView" class="podium-wrap" style="display:none;"></div>
+          <div class="board-footer">
+            <div class="live-indicator"><span class="dot"></span> Live — updates automatically</div>
+            <button class="btn btn-sm btn-ghost" onclick="simulateOutsideBid()">Simulate a new bid (demo)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div><h2>How it works</h2><p>Three steps between you and the #1 spot.</p></div>
+      </div>
+      <div class="how-grid">
+        <div class="how-card"><div class="num">01</div><h4>Create your profile</h4><p>Sign up with your Instagram handle and photo — this is what appears on the public leaderboard.</p></div>
+        <div class="how-card"><div class="num">02</div><h4>Place a real bid</h4><p>Pick an amount and pay via UPI, card, bank transfer, or PayPal. Your rank updates the moment payment is confirmed.</p></div>
+        <div class="how-card"><div class="num">03</div><h4>Hold the spot — or get outbid</h4><p>You stay ranked until someone pays more. Come back anytime and bid again to reclaim the top.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-banner">
+        <h3>Ready to see your name at #1?</h3>
+        <p>It takes less than two minutes to sign up and place your first bid.</p>
+        <button class="btn" onclick="handleBidNow()">Bid Now</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ---------- ABOUT ---------- -->
+<div data-page="about">
+  <div class="page wrap">
+    <div class="page-head">
+      <span class="eyebrow-pill">About the platform</span>
+      <h1>A live auction for the #1 spot.</h1>
+      <p>RankYourInsta.io turns visibility into a real-time, real-money competition — no wallets, no chance, just whoever's willing to pay the most, right now.</p>
+    </div>
+
+    <div class="card prose" style="max-width:760px; margin-bottom:20px;">
+      <h2>The core idea</h2>
+      <p>Every user lists their Instagram profile. To rank, you place a real payment — not a wallet top-up or virtual currency. The leaderboard is always sorted strictly by the highest current paid bid, highest first, and it can never be "locked in": anyone can outbid you at any moment by paying more.</p>
+
+      <h2>A quick example</h2>
+      <div class="diagram">
+        <div class="dstep"><b>Varun bids ₹2</b>Ranked #1</div>
+        <div class="arrow">→</div>
+        <div class="dstep"><b>Ravi bids ₹4</b>Ranked #1, Varun #2</div>
+        <div class="arrow">→</div>
+        <div class="dstep"><b>Gian bids ₹5</b>Ranked #1, Ravi #2, Varun #3</div>
+        <div class="arrow">→</div>
+        <div class="dstep"><b>Varun bids ₹10</b>Back to #1</div>
+      </div>
+      <p>This repeats indefinitely — there's no time limit or reserve price. It's a continuously open auction, and the board re-sorts and animates live for everyone watching.</p>
+
+      <h2>Why people use it</h2>
+      <p>Instagram's own algorithm decides who gets seen. RankYourInsta.io flips that — instead of guessing what the algorithm rewards, you're placed on a public board purely by how much you're willing to put behind your own visibility. Creators use it to drive traffic during a launch, small brands use it to get eyes on a campaign page, and some people just enjoy the competition of holding #1.</p>
+
+      <h2>What this is — and isn't</h2>
+      <p>This is a paid visibility placement, similar in spirit to a real-time advertising auction. <strong>It is not a lottery, a game of chance, or an investment product</strong> — outcomes are determined entirely by who pays the most, not by chance, and a higher bid never guarantees followers, engagement, or any outcome on Instagram itself. Full terms are covered in our Privacy Policy and Terms of Service.</p>
+    </div>
+
+    <div class="card" style="max-width:760px;">
+      <h3 style="margin-top:0; font-size:1.05rem;">Good to know before you bid</h3>
+      <div class="value-grid">
+        <div class="value-item"><h4>Real payments only</h4><p>Every bid is a genuine transaction processed by a licensed payment gateway — never a virtual credit or wallet balance.</p></div>
+        <div class="value-item"><h4>No time limit</h4><p>There's no auction "closing time." You hold your rank for as long as nobody outbids you — could be minutes, could be days.</p></div>
+        <div class="value-item"><h4>Instant re-ranking</h4><p>The moment a payment is confirmed, the whole board re-sorts live for every visitor watching, no refresh needed.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- CONTACT ---------- -->
+<div data-page="contact">
+  <div class="page wrap">
+    <div class="page-head">
+      <span class="eyebrow-pill">We're here 24×7</span>
+      <h1>Get in touch.</h1>
+      <p>Questions about a payment, your rank, or anything else — reach us however's easiest. Support is staffed around the clock, every day of the year.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-card">
+          <div class="c-icon">✉️</div>
+          <div><h4>Email support</h4><p>Best for detailed questions or payment disputes — usually a reply within a few hours.</p><a href="mailto:Contact@spyrnt.com">Contact@spyrnt.com</a></div>
+        </div>
+        <div class="contact-card">
+          <div class="c-icon">💬</div>
+          <div><h4>WhatsApp us</h4><p>Fastest way to reach us, especially for payment or QR-code issues.</p><a href="https://wa.me/917678596887" target="_blank" rel="noopener">+91 76785 96887</a></div>
+        </div>
+        <div class="contact-card">
+          <div class="c-icon">🕐</div>
+          <div><h4>Support hours</h4><p>Our team is available <b style="color:var(--text)">24×7</b>, every day of the week — bids don't sleep, so neither do we.</p></div>
+        </div>
+        <div class="contact-card">
+          <div class="c-icon">💳</div>
+          <div><h4>Payment issues</h4><p>If a bid shows Pending for more than 15 minutes, message us on WhatsApp with your transaction reference.</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;">Send a message</h3>
+        <div class="form-group" id="fg-cname"><label>Name</label><input id="cName" placeholder="Your full name"><span class="err">Enter your name.</span></div>
+        <div class="form-group" id="fg-cemail"><label>Email</label><input id="cEmail" type="email" placeholder="you@example.com"><span class="err">Enter a valid email address.</span></div>
+        <div class="form-group"><label>Subject</label><input id="cSubject" placeholder="Payment issue, general question..."></div>
+        <div class="form-group" id="fg-cmessage"><label>Message</label><textarea id="cMessage" rows="4" placeholder="How can we help?"></textarea><span class="err">Tell us a bit about what you need.</span></div>
+        <button class="btn btn-primary btn-block" onclick="submitContact()">Send Message</button>
+        <p class="hint" style="text-align:center; margin-top:10px;">This form is a working demo — connect it to your email service (e.g. Resend or SendGrid) to receive real messages.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- PRIVACY ---------- -->
+<div data-page="privacy">
+  <div class="page wrap">
+    <div class="page-head">
+      <span class="eyebrow-pill">Last updated September 2026</span>
+      <h1>Privacy Policy</h1>
+      <p>How we collect, use, and protect your data on RankYourInsta.io.</p>
+    </div>
+    <div class="card prose" style="max-width:760px;">
+      <h2>1. What we collect</h2>
+      <p>When you create an account, we collect your full name, email address, Instagram handle, and an optional profile photo. When you place a bid, we record the amount, currency, payment method, and status (pending, paid, or failed) — never your raw card, UPI, or bank details. When you contact support or use the contact form, we keep the message you send us so we can respond.</p>
+
+      <h2>2. How payments are handled</h2>
+      <p>We never store your card, UPI, or bank account details on our servers. All payments are processed by a licensed third-party payment gateway (Cashfree for UPI/India, with Stripe or PayPal for international cards and PayPal). We only receive confirmation that a payment succeeded, its amount, and a transaction reference — the gateway handles the sensitive parts under its own PCI-compliant systems.</p>
+
+      <h2>3. How your data is used</h2>
+      <ul>
+        <li>Your name, photo, Instagram handle, and current bid are shown publicly on the leaderboard — that's the core of the product, so don't upload anything you don't want visible to every visitor.</li>
+        <li>Your email is used only for account access, payment confirmations, and replying to support requests. We don't sell or share it with advertisers.</li>
+        <li>Basic, anonymized usage events (signups, bids placed, payments completed) are logged to help us understand how the platform is used and catch problems early.</li>
+      </ul>
+
+      <h2>4. Cookies &amp; local storage</h2>
+      <p>We use minimal session-level storage to keep you logged in during a visit and to avoid showing the welcome popup repeatedly in the same session. We don't use third-party tracking or advertising cookies.</p>
+
+      <h2>5. Data retention</h2>
+      <p>Account and bid history are retained for as long as your account is active, so your bid history and leaderboard rank stay accurate. You can request deletion at any time from Edit Profile or by contacting support — we'll remove your public listing and personal data, though we may keep anonymized transaction records as required for financial recordkeeping.</p>
+
+      <h2>6. Your rights</h2>
+      <ul>
+        <li>Edit your profile photo, name, Instagram handle, or email at any time from Edit Profile.</li>
+        <li>Request a copy of the data we hold on you by emailing <a href="mailto:Contact@spyrnt.com" style="color:var(--purple); font-weight:600;">Contact@spyrnt.com</a>.</li>
+        <li>Request account and data deletion at any time, subject to the retention note above.</li>
+      </ul>
+
+      <h2>7. Age requirement</h2>
+      <p>RankYourInsta.io involves real-money payments and is intended for users aged 18 and over. We don't knowingly collect data from minors.</p>
+
+      <h2>8. Contact</h2>
+      <p>Questions about this policy or your data can be sent to <a href="mailto:Contact@spyrnt.com" style="color:var(--purple); font-weight:600;">Contact@spyrnt.com</a> or via WhatsApp at +91 76785 96887, available 24×7.</p>
+
+      <p class="muted" style="font-size:0.82rem; margin-top:24px; padding-top:20px; border-top:1px solid var(--border);">This is a general policy template provided for a working demo. Because this platform handles real payments and personal data, have it reviewed by a qualified lawyer — alongside your Terms of Service and the gambling-law framing noted in the README — before accepting real payments.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- SIGN UP ---------- -->
+<div data-page="signup">
+  <div class="page wrap" style="max-width:520px; margin:0 auto;">
+    <div class="page-head" style="max-width:none;">
+      <h1>Create your account</h1>
+      <p>Set up your profile so you're ready to bid.</p>
+    </div>
+    <div class="card">
+      <div class="upload-row">
+        <div class="upload-preview"><img id="signupPhotoPreview" src="" alt="" style="display:none;"></div>
+        <button class="btn btn-ghost btn-sm file-btn">Upload photo
+          <input type="file" accept="image/*" onchange="previewPhoto(this,'signupPhotoPreview')">
+        </button>
+        <span class="hint" style="color:var(--muted-dim); font-size:0.78rem;">Optional — editable later</span>
+      </div>
+      <div class="form-group" id="fg-name"><label>Full Name</label><input id="suName" placeholder="Jane Doe"><span class="err">Enter your full name.</span></div>
+      <div class="form-group" id="fg-email"><label>Email address</label><input id="suEmail" type="email" placeholder="you@example.com"><span class="err">Enter a valid email address.</span></div>
+      <div class="form-group" id="fg-insta"><label>Instagram ID / handle</label><input id="suInsta" placeholder="@yourhandle"><span class="err">Enter your Instagram handle.</span></div>
+      <div class="form-group" id="fg-pass"><label>Password</label><input id="suPassword" type="password" placeholder="At least 8 characters"><span class="err">Password must be at least 8 characters.</span></div>
+      <button class="btn btn-primary btn-block" onclick="doSignup()">Create Account</button>
+      <p class="modal-link">Already have an account? <button onclick="openModal('login')">Log in</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- EDIT PROFILE ---------- -->
+<div data-page="editProfile">
+  <div class="page wrap" style="max-width:520px; margin:0 auto;">
+    <div class="page-head" style="max-width:none;">
+      <h1>Edit Profile</h1>
+      <p>Update your public leaderboard details.</p>
+    </div>
+    <div class="card">
+      <div class="upload-row">
+        <div class="upload-preview"><img id="editPhotoPreview" src="" alt=""></div>
+        <button class="btn btn-ghost btn-sm file-btn">Change photo
+          <input type="file" accept="image/*" onchange="previewPhoto(this,'editPhotoPreview')">
+        </button>
+      </div>
+      <div class="form-group"><label>Full Name</label><input id="epName"></div>
+      <div class="form-group"><label>Instagram ID / handle</label><input id="epInsta"></div>
+      <div class="form-group"><label>Email</label><input id="epEmail" type="email"></div>
+      <button class="btn btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- PAYMENT / BID ---------- -->
+<div data-page="payment">
+  <div class="page wrap" style="max-width:560px; margin:0 auto;">
+    <div class="page-head" style="max-width:none;">
+      <h1>Place your bid</h1>
+      <p>Your rank updates the moment payment is confirmed.</p>
+    </div>
+    <div class="card">
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Bid amount</label>
+          <input id="bidAmount" type="number" min="1" placeholder="e.g. 500" oninput="updatePaySummary()">
+        </div>
+        <div class="form-group">
+          <label>Currency</label>
+          <select id="bidCurrency" onchange="updatePaySummary()">
+            <option value="INR">INR (₹)</option>
+            <option value="USD">USD ($)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Payment method</label>
+        <div class="method-grid" id="methodGrid">
+          <button class="method-opt active" data-m="UPI" onclick="selectMethod('UPI')">UPI</button>
+          <button class="method-opt" data-m="Bank" onclick="selectMethod('Bank')">Bank Transfer</button>
+          <button class="method-opt" data-m="PayPal" onclick="selectMethod('PayPal')">PayPal</button>
+          <button class="method-opt" data-m="Card" onclick="selectMethod('Card')">Credit/Debit Card</button>
+        </div>
+      </div>
+
+      <div id="upiBlock">
+        <div class="qr-box">
+          <div class="qr-placeholder">QR code for <span id="qrAmountLabel">your bid amount</span> will render here</div>
+          <span class="pill-note">⚡ UPI checkout via Cashfree — connecting soon</span>
+        </div>
+      </div>
+      <div id="otherMethodBlock" style="display:none;">
+        <div class="qr-box" style="padding:20px;">
+          <span class="pill-note" id="otherMethodLabel">Secure checkout — connecting soon</span>
+        </div>
+      </div>
+
+      <div style="margin:20px 0; padding:14px 16px; background:var(--surface2); border-radius:12px; display:flex; justify-content:space-between; font-size:0.92rem;">
+        <span class="muted">You're bidding</span>
+        <b id="paySummaryAmt">—</b>
+      </div>
+
+      <button class="btn btn-primary btn-block" onclick="submitBid()">Pay & Place Bid</button>
+      <p class="hint" style="text-align:center; margin-top:10px;">Payments are processed by a licensed gateway (Cashfree). We never store your card or bank details.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;" id="myBidHistoryCard">
+      <h3 style="margin-top:0; font-size:1rem;">Your recent bids</h3>
+      <div id="myBidHistory"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <span class="logo font-display">RankYourInsta.io</span>
+      <div class="footer-links">
+        <a href="#" onclick="nav('home');return false;">Home</a>
+        <a href="#" onclick="nav('about');return false;">About Us</a>
+        <a href="#" onclick="nav('contact');return false;">Contact Us</a>
+        <a href="#" onclick="nav('privacy');return false;">Privacy Policy</a>
+      </div>
+    </div>
+    <p class="footer-note">RankYourInsta.io is a paid visibility/ranking placement, not a lottery, game of chance, or investment product. Support available 24×7 at Contact@spyrnt.com or WhatsApp +91 76785 96887.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   STATE (in-memory only — per persistent-storage rules, no
+   localStorage/sessionStorage is used inside this artifact)
+   ============================================================ */
+let currentUser = null; // {name, email, insta, password, photo}
+let currentTab = 'all';
+let selectedMethod = 'UPI';
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8," + encodeURIComponent(`
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+    <rect width='100' height='100' fill='#2A1D40'/>
+    <circle cx='50' cy='38' r='18' fill='#A79BC4'/>
+    <ellipse cx='50' cy='88' rx='32' ry='26' fill='#A79BC4'/>
+  </svg>`);
+
+function seedAvatar(seed){
+  const colors = ['#833AB4','#E1306C','#F77737','#F5C242','#3FC98A','#5851DB'];
+  const c = colors[seed.length % colors.length];
+  const initial = seed.trim().charAt(0).toUpperCase() || '?';
+  return "data:image/svg+xml;utf8," + encodeURIComponent(`
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <rect width='100' height='100' fill='${c}'/>
+      <text x='50' y='62' font-size='42' font-family='Sora, sans-serif' font-weight='800' fill='white' text-anchor='middle'>${initial}</text>
+    </svg>`);
+}
+
+let bidders = [
+  {name:'Ravi Kumar', insta:'@ravi.codes', amount:480, currency:'INR', photo:seedAvatar('Ravi')},
+  {name:'Priya Nair', insta:'@priyanair', amount:640, currency:'INR', photo:seedAvatar('Priya')},
+  {name:'Gian Mehta', insta:'@gianmehta', amount:910, currency:'INR', photo:seedAvatar('Gian')},
+  {name:'Aisha Khan', insta:'@aisha.k', amount:350, currency:'INR', photo:seedAvatar('Aisha')},
+  {name:'Varun Sethi', insta:'@varunsethi', amount:220, currency:'INR', photo:seedAvatar('Varun')},
+  {name:'Neha Joshi', insta:'@neha.joshi', amount:150, currency:'INR', photo:seedAvatar('Neha')},
+  {name:'Kabir Anand', insta:'@kabiranand', amount:95, currency:'INR', photo:seedAvatar('Kabir')},
+];
+let myBidHistory = [];
+
+function sortBidders(){ bidders.sort((a,b)=> b.amount - a.amount); }
+sortBidders();
+
+/* ============================================================ NAV ============================================================ */
+function nav(page){
+  document.querySelectorAll('[data-page]').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  document.querySelectorAll('nav.main-nav a').forEach(a=>a.classList.remove('active'));
+  const navLink = document.querySelector(`nav.main-nav a[data-nav="${page}"]`);
+  if(navLink) navLink.classList.add('active');
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant':'auto'});
+  document.getElementById('mobileNav').classList.remove('open');
+  if(page==='payment') updatePaySummary();
+  if(page==='payment') renderMyBidHistory();
+}
+
+function toggleMobileNav(){
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+function toggleDropdown(){
+  document.getElementById('profileDropdown').classList.toggle('open');
+}
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('profileDropdown');
+  const btn = e.target.closest('.avatar-btn');
+  if(!btn && dd && !dd.contains(e.target)) dd.classList.remove('open');
+});
+
+/* ============================================================ WELCOME POPUP ============================================================ */
+let welcomeShown = false;
+function maybeShowWelcome(){
+  if(welcomeShown || currentUser) return;
+  welcomeShown = true;
+  setTimeout(()=>{
+    if(!currentUser) document.getElementById('welcomePopup').classList.add('open');
+  }, 1400);
+}
+function closeWelcome(){ document.getElementById('welcomePopup').classList.remove('open'); }
+maybeShowWelcome();
+
+/* ============================================================ MODALS ============================================================ */
+function openModal(name){ document.getElementById(name+'Modal').classList.add('open'); }
+function closeModal(name){ document.getElementById(name+'Modal').classList.remove('open'); }
+
+/* ============================================================ TOASTS ============================================================ */
+function toast(msg){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity 0.3s'; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+/* ============================================================ AUTH ============================================================ */
+function clearFieldErrors(ids){ ids.forEach(id=>document.getElementById(id).classList.remove('has-err')); }
+
+function doSignup(){
+  const name = document.getElementById('suName').value.trim();
+  const email = document.getElementById('suEmail').value.trim();
+  const insta = document.getElementById('suInsta').value.trim();
+  const pass = document.getElementById('suPassword').value;
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  clearFieldErrors(['fg-name','fg-email','fg-insta','fg-pass']);
+  let valid = true;
+  if(!name){ document.getElementById('fg-name').classList.add('has-err'); valid=false; }
+  if(!emailOk){ document.getElementById('fg-email').classList.add('has-err'); valid=false; }
+  if(!insta){ document.getElementById('fg-insta').classList.add('has-err'); valid=false; }
+  if(!pass || pass.length<8){ document.getElementById('fg-pass').classList.add('has-err'); valid=false; }
+  if(!valid) return;
+
+  const photoImg = document.getElementById('signupPhotoPreview');
+  const photo = photoImg.style.display!=='none' && photoImg.src ? photoImg.src : seedAvatar(name);
+
+  currentUser = {name, email, insta: insta.startsWith('@')?insta:'@'+insta.replace('@',''), password:pass, photo};
+  toast('Account created — confirmation email sent to ' + email);
+  applyLoggedInUI();
+  nav('home');
+}
+
+function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  if(!email || !pass){ toast('Enter your email and password.'); return; }
+  // Demo auth: accept any credentials and create a session user if none exists yet
+  if(!currentUser){
+    currentUser = {name: email.split('@')[0], email, insta:'@'+email.split('@')[0], password:pass, photo: seedAvatar(email)};
+  }
+  closeModal('login');
+  applyLoggedInUI();
+  toast('Logged in successfully');
+}
+
+function logout(){
+  currentUser = null;
+  document.getElementById('loggedOutActions').style.display='flex';
+  document.getElementById('loggedInActions').style.display='none';
+  document.getElementById('mobileAuthLinks').style.display='flex';
+  toggleDropdown();
+  nav('home');
+  toast('Logged out');
+}
+
+function applyLoggedInUI(){
+  document.getElementById('loggedOutActions').style.display='none';
+  document.getElementById('loggedInActions').style.display='flex';
+  document.getElementById('mobileAuthLinks').style.display='none';
+  document.getElementById('headerAvatar').src = currentUser.photo || DEFAULT_AVATAR;
+  document.getElementById('epName').value = currentUser.name;
+  document.getElementById('epInsta').value = currentUser.insta;
+  document.getElementById('epEmail').value = currentUser.email;
+  document.getElementById('editPhotoPreview').innerHTML = '';
+  const img = document.createElement('img');
+  img.src = currentUser.photo || DEFAULT_AVATAR;
+  document.getElementById('editPhotoPreview').appendChild(img);
+}
+
+function saveProfile(){
+  if(!currentUser) return;
+  currentUser.name = document.getElementById('epName').value.trim() || currentUser.name;
+  currentUser.insta = document.getElementById('epInsta').value.trim() || currentUser.insta;
+  currentUser.email = document.getElementById('epEmail').value.trim() || currentUser.email;
+  const preview = document.querySelector('#editPhotoPreview img');
+  if(preview && preview.src) currentUser.photo = preview.src;
+  document.getElementById('headerAvatar').src = currentUser.photo;
+  toast('Profile updated');
+  nav('home');
+}
+
+function previewPhoto(input, targetId){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const img = document.getElementById(targetId);
+    img.src = e.target.result;
+    img.style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleBidNow(){
+  if(!currentUser){ openModal('login'); toast('Log in to place a bid'); return; }
+  nav('payment');
+}
+
+/* ============================================================ LEADERBOARD RENDER ============================================================ */
+function fmt(n, cur){ return (cur==='USD'?'$':'₹') + n.toLocaleString('en-IN'); }
+
+function renderBoard(){
+  sortBidders();
+  document.getElementById('statTotal').textContent = bidders.length;
+  document.getElementById('statTop').textContent = bidders.length ? fmt(bidders[0].amount, bidders[0].currency) : '—';
+  renderMiniPodium();
+
+  const listView = document.getElementById('boardListView');
+  const podiumView = document.getElementById('boardPodiumView');
+
+  if(currentTab === 'top3'){
+    listView.style.display='none'; podiumView.style.display='flex';
+    renderPodium();
+  } else {
+    listView.style.display='flex'; podiumView.style.display='none';
+    const data = currentTab==='top10' ? bidders.slice(0,10) : bidders;
+    listView.innerHTML = data.map((b,i)=>rowHtml(b,i)).join('');
+  }
+}
+
+function rowHtml(b,i){
+  const rank = i+1;
+  return `<div class="board-row rank-${rank<=3?rank:'x'}" data-name="${b.name}">
+    <div class="rank-num">${rank}</div>
+    <div class="row-avatar"><img src="${b.photo}" alt=""></div>
+    <div class="row-info">
+      <div class="rname">${b.name}</div>
+      <a class="rinsta" href="https://instagram.com/${b.insta.replace('@','')}" target="_blank" rel="noopener">${b.insta}</a>
+    </div>
+    <div class="row-bid"><span class="cur">${b.currency}</span>${fmt(b.amount,b.currency).replace(/^[₹$]/,'')}</div>
+  </div>`;
+}
+
+function renderPodium(){
+  const top3 = bidders.slice(0,3);
+  const order = [top3[1], top3[0], top3[2]]; // 2nd, 1st, 3rd visually
+  const podiumView = document.getElementById('boardPodiumView');
+  podiumView.innerHTML = order.filter(Boolean).map(b=>{
+    const rank = bidders.indexOf(b)+1;
+    return `<div class="podium-card p${rank}">
+      ${rank===1?'<div class="crown">👑</div>':''}
+      <img src="${b.photo}" alt="">
+      <div class="pname">${b.name}</div>
+      <a class="pinsta" href="https://instagram.com/${b.insta.replace('@','')}" target="_blank" rel="noopener">${b.insta}</a>
+      <div class="pbid">${fmt(b.amount,b.currency)}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderMiniPodium(){
+  const top3 = bidders.slice(0,3);
+  const order = [top3[1], top3[0], top3[2]];
+  const el = document.getElementById('miniPodium');
+  el.innerHTML = order.filter(Boolean).map(b=>{
+    const rank = bidders.indexOf(b)+1;
+    return `<div class="p rank${rank}">
+      <img src="${b.photo}" alt="">
+      <div class="name">${b.name.split(' ')[0]}</div>
+      <div class="amt">${fmt(b.amount,b.currency)}</div>
+      <div class="bar"></div>
+    </div>`;
+  }).join('');
+}
+
+function setBoardTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.board-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  renderBoard();
+}
+
+function flashRow(name){
+  setTimeout(()=>{
+    const row = document.querySelector(`.board-row[data-name="${CSS.escape(name)}"]`);
+    if(row){ row.classList.add('flash'); setTimeout(()=>row.classList.remove('flash'), 900); }
+  }, 30);
+}
+
+function simulateOutsideBid(){
+  const pool = bidders.concat(currentUser ? [] : []);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const bump = Math.floor(Math.random()*400)+50;
+  pick.amount += bump;
+  toast(`${pick.name} just bid ${fmt(pick.amount, pick.currency)}!`);
+  renderBoard();
+  flashRow(pick.name);
+}
+
+/* ============================================================ PAYMENT / BID FLOW ============================================================ */
+function selectMethod(m){
+  selectedMethod = m;
+  document.querySelectorAll('.method-opt').forEach(b=>b.classList.toggle('active', b.dataset.m===m));
+  document.getElementById('upiBlock').style.display = m==='UPI' ? 'block':'none';
+  document.getElementById('otherMethodBlock').style.display = m==='UPI' ? 'none':'block';
+  const labels = {Bank:'Bank transfer checkout — connecting soon', PayPal:'PayPal checkout — connecting soon', Card:'Card checkout — connecting soon'};
+  if(labels[m]) document.getElementById('otherMethodLabel').textContent = labels[m];
+  updatePaySummary();
+}
+
+function updatePaySummary(){
+  const amt = parseFloat(document.getElementById('bidAmount').value) || 0;
+  const cur = document.getElementById('bidCurrency').value;
+  document.getElementById('paySummaryAmt').textContent = amt ? fmt(amt, cur) : '—';
+  document.getElementById('qrAmountLabel').textContent = amt ? fmt(amt, cur) : 'your bid amount';
+}
+
+function submitBid(){
+  if(!currentUser){ openModal('login'); return; }
+  const amt = parseFloat(document.getElementById('bidAmount').value);
+  const cur = document.getElementById('bidCurrency').value;
+  if(!amt || amt<=0){ toast('Enter a valid bid amount'); return; }
+
+  // ---- INTEGRATION POINT: replace this mock block with a real Cashfree
+  // order-create + webhook-confirmed payment before marking status "Paid".
+  const record = {amount:amt, currency:cur, method:selectedMethod, status:'pending', ts:new Date()};
+  myBidHistory.unshift(record);
+  renderMyBidHistory();
+  toast('Processing payment...');
+
+  setTimeout(()=>{
+    record.status = 'paid';
+    renderMyBidHistory();
+
+    const existing = bidders.find(b=>b.insta===currentUser.insta);
+    if(existing){ existing.amount = amt; existing.currency = cur; }
+    else { bidders.push({name:currentUser.name, insta:currentUser.insta, amount:amt, currency:cur, photo:currentUser.photo}); }
+    renderBoard();
+    flashRow(currentUser.name);
+    toast('Payment confirmed — your rank is updated!');
+    document.getElementById('bidAmount').value='';
+    updatePaySummary();
+  }, 1200);
+}
+
+function renderMyBidHistory(){
+  const el = document.getElementById('myBidHistory');
+  if(!myBidHistory.length){ el.innerHTML = '<p class="muted" style="font-size:0.85rem;">No bids yet.</p>'; return; }
+  el.innerHTML = myBidHistory.slice(0,5).map(r=>`
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:0.88rem;">
+      <span>${fmt(r.amount, r.currency)} · ${r.method}</span>
+      <span class="status-badge ${r.status}">${r.status==='paid'?'Paid':r.status==='pending'?'Pending':'Failed'}</span>
+    </div>`).join('');
+}
+
+/* ============================================================ CONTACT FORM ============================================================ */
+function submitContact(){
+  const name = document.getElementById('cName').value.trim();
+  const email = document.getElementById('cEmail').value.trim();
+  const msg = document.getElementById('cMessage').value.trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  clearFieldErrors(['fg-cname','fg-cemail','fg-cmessage']);
+  let valid = true;
+  if(!name){ document.getElementById('fg-cname').classList.add('has-err'); valid=false; }
+  if(!emailOk){ document.getElementById('fg-cemail').classList.add('has-err'); valid=false; }
+  if(!msg){ document.getElementById('fg-cmessage').classList.add('has-err'); valid=false; }
+  if(!valid) return;
+
+  // ---- INTEGRATION POINT: wire this to a real email service (Resend/SendGrid/Postmark)
+  // so messages actually reach Contact@spyrnt.com instead of just showing a toast.
+  toast("Message sent — we'll get back to you shortly.");
+  ['cName','cEmail','cSubject','cMessage'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ============================================================ INIT ============================================================ */
+renderBoard();
+setInterval(()=>{ if(Math.random()<0.5) simulateOutsideBid(); }, 9000);
+
+</script>
+</body>
+</html>
